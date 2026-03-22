@@ -1,0 +1,67 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  norminette:
+    name: Norminette Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Install Norminette
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
+
+      - name: Run Norminette
+        run: norminette .
+
+  static-analysis:
+    name: Cppcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Cppcheck
+        run: sudo apt-get install -y cppcheck
+
+      - name: Run Cppcheck
+        run: cppcheck --enable=all --error-exitcode=1 .
+
+  build:
+    name: Compilation Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Build Essentials
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+
+      - name: Make project
+        run: make
+
+      - name: Check for relink
+        run: |
+          make > first_build.txt
+          make > second_build.txt
+          if grep -q "Nothing to be done" second_build.txt || grep -q "up to date" second_build.txt; then
+            echo "No relink detected. Good job!"
+          else
+            echo "Error: Makefile relinks!"
+            exit 1
+          fi
+
+      - name: Clean project
+        run: make fclean
