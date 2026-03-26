@@ -1,2 +1,28 @@
-# 42-codexion
-My implementation of 42 school's Codexion project. 
+*This project has been created as a part of the 42 curriculum by mpouillo.*
+
+# Codexion
+
+### Description:
+
+TODO
+
+### Instructions
+
+Compile the program with the following command:
+```shell
+$> make all
+```
+
+Run the program:
+```shell
+$> ./codexion [number_of_coders time_to_burnout time_to_compile time_to_debug time_to_refactor number_of_compiles_required dongle_cooldown scheduler]
+```
+
+### Resources:
+
+- [Project link](https://projects.intra.42.fr/projects/codexion) (requires access to the 42 intra)
+- [Mastering Concurrency in C with Pthreads: A Comprehensive Guide](https://dev.to/emanuelgustafzon/mastering-concurrency-in-c-with-pthreads-a-comprehensive-guide-56je)
+- [Linux Tutorial: POSIX Threads](https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html)
+- [pthreads (Wikipedia)](https://en.wikipedia.org/wiki/Pthreads)
+- [Jacob Sorber - Programming with Threads (Youtube Playlist)](https://www.youtube.com/playlist?list=PL9IEJIKnBJjFZxuqyJ9JqVYmuFZHr7CFM)
+
