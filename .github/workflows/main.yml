@@ -40,8 +40,8 @@ jobs:
 
       - name: Check for relink
         run: |
-          make > first_build.txt
-          make > second_build.txt
+          make -C coders > first_build.txt
+          make -C coders > second_build.txt
           if grep -q "Nothing to be done" second_build.txt || grep -q "up to date" second_build.txt; then
             echo "No relink detected. Good job!"
           else
@@ -50,4 +50,4 @@ jobs:
           fi
 
       - name: Clean project
-        run: make fclean
+        run: make fclean -C coders
