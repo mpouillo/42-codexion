@@ -6,11 +6,11 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 13:05:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/03/26 13:14:55 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:05:42 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes.h"
+#include "../includes.h"
 
 void	fill_variables(t_variables *variables, char **argv)
 {

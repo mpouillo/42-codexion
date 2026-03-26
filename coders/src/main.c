@@ -6,11 +6,11 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 12:30:27 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/03/26 13:58:46 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/03/26 14:05:47 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes.h"
+#include "../includes.h"
 
 void	print_variables(t_variables *variables)
 {
@@ -81,17 +81,13 @@ int	main(int argc, char **argv)
 		printf("Invalid arguments.\n");
 		return (1);
 	}
-
 	variables = (t_variables *) malloc(sizeof(t_variables));
 	fill_variables(variables, argv);
 	print_variables(variables);
-
 	coders = create_threads(variables);
 	if (!coders)
 		printf("Error while creating coders\n");
-
 	join_threads(coders, variables);
-
 	free(coders);
 	free(variables);
 	return (0);
