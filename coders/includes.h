@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/03/28 14:46:56 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/03/31 12:53:12 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_data
 	t_coder		**coders;
 	t_dongle	*dongles;
 	t_variables	*variables;
+	long long	start_time_us;
 
 }	t_data;
 
