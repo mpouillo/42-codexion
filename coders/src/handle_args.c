@@ -3,25 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   handle_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mpouillo <mpouillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 13:05:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/03/26 14:05:42 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/01 14:52:55 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
 
-void	fill_variables(t_variables *variables, char **argv)
+t_parameters	*get_parameters(char **argv)
 {
-	variables->number_of_coders = atoi(argv[1]);
-	variables->time_to_burnout = atoi(argv[2]);
-	variables->time_to_compile = atoi(argv[3]);
-	variables->time_to_debug = atoi(argv[4]);
-	variables->time_to_refactor = atoi(argv[5]);
-	variables->number_of_compiles_required = atoi(argv[6]);
-	variables->dongles_cooldown = atoi(argv[7]);
-	variables->scheduler = argv[8];
+	t_parameters	*parameters;
+
+	parameters = (t_parameters *) malloc(sizeof(t_parameters));
+	parameters->number_of_coders = atoi(argv[1]);
+	parameters->time_to_burnout = atoi(argv[2]);
+	parameters->time_to_compile = atoi(argv[3]);
+	parameters->time_to_debug = atoi(argv[4]);
+	parameters->time_to_refactor = atoi(argv[5]);
+	parameters->number_of_compiles_required = atoi(argv[6]);
+	parameters->dongles_cooldown = atoi(argv[7]);
+	if (strcmp(argv[8], "fifo") == 0)
+		parameters->scheduler = fifo;
+	else
+		parameters->scheduler = edf;
+	return (parameters);
 }
 
 static int	int_validation(const char *nptr)
