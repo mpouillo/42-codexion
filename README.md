@@ -25,4 +25,6 @@ $> ./codexion [number_of_coders time_to_burnout time_to_compile time_to_debug ti
 - [Linux Tutorial: POSIX Threads](https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html)
 - [pthreads (Wikipedia)](https://en.wikipedia.org/wiki/Pthreads)
 - [Jacob Sorber - Programming with Threads (Youtube Playlist)](https://www.youtube.com/playlist?list=PL9IEJIKnBJjFZxuqyJ9JqVYmuFZHr7CFM)
-
+- [Enumeration (or enum) in C](https://www.geeksforgeeks.org/c/enumeration-enum-c/)
+- [Posix Threads Programming](https://hpc-tutorials.llnl.gov/posix/)
+- [CIS 307: Threads: Implementing Monitors using locks and condition variables](https://cis.temple.edu/~giorgio/old/cis307s97/readings/pbuffer.html)
