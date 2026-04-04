@@ -14,7 +14,11 @@ CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
 SRCS :=			main.c \
-				handle_args.c
+				handle_args.c \
+				print.c \
+				thread_functions.c \
+				timing.c \
+				queue.c
 
 SRCS_PATH		:= $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS			:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_PATH))

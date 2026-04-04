@@ -28,3 +28,4 @@ $> ./codexion [number_of_coders time_to_burnout time_to_compile time_to_debug ti
 - [Enumeration (or enum) in C](https://www.geeksforgeeks.org/c/enumeration-enum-c/)
 - [Posix Threads Programming](https://hpc-tutorials.llnl.gov/posix/)
 - [CIS 307: Threads: Implementing Monitors using locks and condition variables](https://cis.temple.edu/~giorgio/old/cis307s97/readings/pbuffer.html)
+- [Coding Basics: Thread-Safe Blocking Queue in C](https://medium.com/@chedy.smaoui/coding-basics-thread-safe-blocking-queue-in-c-6ecad9b4980a)
