@@ -13,12 +13,18 @@ DEP_DIR			:= $(BUILD_DIR)/deps
 CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
-SRCS :=			main.c \
-				handle_args.c \
-				print.c \
-				thread_functions.c \
-				timing.c \
-				queue.c
+DEFAULT_ARGS ?= 8 1000 200 100 50 5 100 fifo
+
+SRCS :=			coder_actions.c	\
+				coders.c 		\
+				dongles.c		\
+				main.c			\
+				monitor.c		\
+				parsing.c		\
+				print.c			\
+				sim.c			\
+				thread.c		\
+				timing.c
 
 SRCS_PATH		:= $(addprefix $(SRC_DIR)/,$(SRCS))
 OBJS			:= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_PATH))
@@ -31,6 +37,12 @@ CYAN			:= \033[1;36m
 RESET			:= \033[0m
 
 all: $(NAME)
+
+run: all
+	./codexion $(DEFAULT_ARGS)
+
+valgrind: all
+	valgrind --tool=drd ./codexion $(DEFAULT_ARGS)
 
 $(NAME): $(OBJS)
 	@echo "$(YELLOW)LINKING...$(RESET)"

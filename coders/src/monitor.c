@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/02 11:40:14 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/05 12:36:50 by mpouillo         ###   ########.fr       */
+/*   Created: 2026/04/05 12:31:57 by mpouillo          #+#    #+#             */
+/*   Updated: 2026/04/05 13:37:35 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
 
-int	main(int argc, char **argv)
+void	*monitor_routine(void *arg)
 {
-	int	exit_status;
+	t_sim	*sim;
 
-	if (argc != 9)
-	{
-		printf("Usage: ./codexion <number_of_coders> <time_to_burnout> \
-			<time_to_compile> <time_to_debug> <time_to_refactor> \
-			<number_of_compiles_required> <dongle_cooldown> <scheduler>\n");
-		return (1);
-	}
-	get_time_since_start();
-	exit_status = run_sim(argv);
-	return (exit_status);
+	sim = (t_sim *) arg;
+	pthread_mutex_lock(&sim->print_mutex);
+	printf("Monitor thread started\n");
+	pthread_mutex_unlock(&sim->print_mutex);
+	return (NULL);
 }

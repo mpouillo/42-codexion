@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/04 14:36:51 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/05 14:26:53 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define TRUE			1
-# define FALSE			-1
 
 # define COMPILING		1
 # define DEBUGGING		2
@@ -40,26 +37,13 @@ typedef struct s_params
 	char	*scheduler;
 }	t_params;
 
-typedef struct s_queue
-{
-	pthread_mutex_t	*mutex;
-	int				array[2];
-	int				current_size;
-}	t_queue;
-
 typedef struct s_dongle
 {
-	pthread_mutex_t	*mutex;
-	t_queue			*queue;
+	pthread_mutex_t	mutex;
+	int				queue[2];
 	long long		last_use;
+	int				available;
 }	t_dongle;
-
-typedef struct s_data
-{
-	t_params		*params;
-	pthread_mutex_t	*print_mutex;
-	long long		start_time_us;
-}	t_data;
 
 typedef struct s_coder
 {
@@ -67,29 +51,52 @@ typedef struct s_coder
 	pthread_t		thread;
 	t_dongle		*dongle_1;
 	t_dongle		*dongle_2;
-	long			last_compile;
+	long long		last_compile;
 	int				compile_count;
-	t_data			*data;
+	struct s_sim	*sim;
 }	t_coder;
 
-//		handle_args.c
-t_parameters	*get_parameters(char **argv);
-int		validate_arguments(char **argv);
+typedef struct s_sim
+{
+	t_coder			*coders;
+	t_dongle		*dongles;
+	t_params		*params;
+	pthread_t		monitor;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	sim_mutex;
+	int				is_running;
+
+}	t_sim;
+
+//		coder_actions.c
+void		*coder_routine(void *arg);
+
+//		coders.c
+int			init_coders(t_sim *sim);
+
+//		dongles.c
+int			init_dongles(t_sim *sim);
+int			destroy_dongles(t_sim *sim, int n);
+
+//		monitor.c
+void		*monitor_routine(void *arg);
+
+//		parsing.c
+t_params	*parse_params(t_params *params, char **argv);
 
 //		print.c
-void	print_status(pthread_mutex_t *print_mutex, int status, int coder_id, int time);
-void	print_dongle(pthread_mutex_t *print_mutex, int coder_id, int time);
+void		print_action(t_sim *sim, char *msg, int coder_id);
+void		print_dongle(t_sim *sim, int coder_id);
 
-//		thread_functions.c
-void	*vibe_coding(void *arg);
+//		sim.c
+int			run_sim(char **argv);
+int			stop_sim(t_sim *sim);
 
 //		timing.c
 long long	get_time_since_start(void);
 
-//		queue.c
-t_queue	*q_create(void);
-int		q_enqueue(t_queue *q, int coder_id);
-int		q_dequeue(t_queue *q, t_data *data, t_scheduler scheduler);
-void	q_destroy(t_queue *q);
+//		thread.c
+int			start_threads(t_sim *sim);
+int			join_threads(t_sim *sim);
 
 #endif
