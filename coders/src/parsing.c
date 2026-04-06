@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_args.c                                      :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 13:05:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/05 12:56:06 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:18:50 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ t_params	*parse_params(t_params *params, char **argv)
 	params->refactor_t = atoi(argv[5]);
 	params->req_compiles_nb = atoi(argv[6]);
 	params->dongle_cd = atoi(argv[7]);
-	params->scheduler = argv[8];
+	if (strcmp(argv[8], "edf") == 0)
+		params->scheduler = EDF;
+	else
+		params->scheduler = FIFO;
 	if (!validate_args(argv))
 	{
 		printf("Invalid arguments.\n");

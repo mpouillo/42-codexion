@@ -13,7 +13,7 @@ DEP_DIR			:= $(BUILD_DIR)/deps
 CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
-DEFAULT_ARGS ?= 8 1000 200 100 50 5 100 fifo
+DEFAULT_ARGS ?= 3 15 6 2 2 100 1 fifo
 
 SRCS :=			coder_actions.c	\
 				coders.c 		\
@@ -22,6 +22,7 @@ SRCS :=			coder_actions.c	\
 				monitor.c		\
 				parsing.c		\
 				print.c			\
+				queue.c			\
 				sim.c			\
 				thread.c		\
 				timing.c

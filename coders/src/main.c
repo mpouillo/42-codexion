@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 11:40:14 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/05 12:36:50 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/06 14:03:42 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 			<number_of_compiles_required> <dongle_cooldown> <scheduler>\n");
 		return (1);
 	}
-	get_time_since_start();
+	get_timestamp();
 	exit_status = run_sim(argv);
 	return (exit_status);
 }

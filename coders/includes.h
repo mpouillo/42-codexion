@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/05 14:26:53 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/06 15:35:29 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,22 @@
 # define DEBUGGING		2
 # define REFACTORING	3
 
+typedef enum e_scheduler
+{
+	EDF,
+	FIFO
+}	t_scheduler;
+
 typedef struct s_params
 {
-	int		coders_nb;
-	int		burnout_t;
-	int		compile_t;
-	int		debug_t;
-	int		refactor_t;
-	int		req_compiles_nb;
-	int		dongle_cd;
-	char	*scheduler;
+	int			coders_nb;
+	int			burnout_t;
+	int			compile_t;
+	int			debug_t;
+	int			refactor_t;
+	int			req_compiles_nb;
+	int			dongle_cd;
+	t_scheduler	scheduler;
 }	t_params;
 
 typedef struct s_dongle
@@ -62,7 +68,6 @@ typedef struct s_sim
 	t_dongle		*dongles;
 	t_params		*params;
 	pthread_t		monitor;
-	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	sim_mutex;
 	int				is_running;
 
@@ -77,6 +82,8 @@ int			init_coders(t_sim *sim);
 //		dongles.c
 int			init_dongles(t_sim *sim);
 int			destroy_dongles(t_sim *sim, int n);
+int			acquire_dongles(t_coder *coder);
+void		release_dongles(t_coder *coder);
 
 //		monitor.c
 void		*monitor_routine(void *arg);
@@ -86,14 +93,20 @@ t_params	*parse_params(t_params *params, char **argv);
 
 //		print.c
 void		print_action(t_sim *sim, char *msg, int coder_id);
-void		print_dongle(t_sim *sim, int coder_id);
+
+//		queue.c
+int			is_next(t_sim *sim, t_dongle *dongle, int coder_id);
+int			queue_pop(t_dongle *dongle, int coder_id);
+void		queue_push(t_dongle *dongle, int coder_id);
 
 //		sim.c
 int			run_sim(char **argv);
+int			sim_running(t_sim *sim);
 int			stop_sim(t_sim *sim);
 
 //		timing.c
-long long	get_time_since_start(void);
+long long	get_timestamp(void);
+void		sleep_thread(t_sim *sim, long long sleep_time);
 
 //		thread.c
 int			start_threads(t_sim *sim);
