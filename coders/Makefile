@@ -13,7 +13,7 @@ DEP_DIR			:= $(BUILD_DIR)/deps
 CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
-DEFAULT_ARGS ?= 3 15 6 2 2 100 1 fifo
+ARGS ?= 10 330 100 100 100 10 20 fifo
 
 SRCS :=			coder_actions.c	\
 				coders.c 		\
@@ -40,10 +40,13 @@ RESET			:= \033[0m
 all: $(NAME)
 
 run: all
-	./codexion $(DEFAULT_ARGS)
+	./codexion $(ARGS)
+
+test: all
+	for i in {1...20}; do ./codexion $(ARGS); done
 
 valgrind: all
-	valgrind --tool=drd ./codexion $(DEFAULT_ARGS)
+	valgrind ./codexion $(ARGS)
 
 $(NAME): $(OBJS)
 	@echo "$(YELLOW)LINKING...$(RESET)"

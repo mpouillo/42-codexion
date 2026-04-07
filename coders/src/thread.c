@@ -6,41 +6,45 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:16:56 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 12:08:24 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 14:19:44 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
 
+// Joins all monitor and coder threads.
+// Returns 1 on success or 0 on error.
 int	join_threads(t_sim *sim)
 {
 	int	i;
 	int	status;
 
 	i = 0;
-	status = pthread_join(sim->monitor, NULL);
-	if (status)
-	{
-		pthread_mutex_lock(&sim->sim_mutex);
-		printf("Error joining monitor thread (%i).\n", i);
-		pthread_mutex_unlock(&sim->sim_mutex);
-		return (stop_sim(sim));
-	}
 	while (i < sim->params->coders_nb)
 	{
 		status = pthread_join(sim->coders[i].thread, NULL);
 		if (status)
 		{
 			pthread_mutex_lock(&sim->sim_mutex);
-			printf("Error joining threads (%i).\n", i);
-			pthread_mutex_unlock(&sim->sim_mutex);
-			return (stop_sim(sim));
+			printf("Error joining thread %i (%i)\n", i + 1, status);
+			sim->is_running = 0;
+			return (pthread_mutex_unlock(&sim->sim_mutex));
 		}
 		i++;
+	}
+	status = pthread_join(sim->monitor, NULL);
+	if (status)
+	{
+		pthread_mutex_lock(&sim->sim_mutex);
+		printf("Error joining monitor thread (%i)\n", status);
+		sim->is_running = 0;
+		return (pthread_mutex_unlock(&sim->sim_mutex));
 	}
 	return (1);
 }
 
+// Creates monitor and coder threads.
+// Returns 1 on success or 0 on error.
 int	start_threads(t_sim *sim)
 {
 	int	i;
@@ -59,10 +63,12 @@ coder_routine, (void *) &sim->coders[i]);
 		i++;
 	}
 	pthread_mutex_lock(&sim->sim_mutex);
-	if (i == sim->params->coders_nb)
-		sim->is_running = 1;
-	else
+	if (i != sim->params->coders_nb)
+	{
 		sim->is_running = 0;
+		return (pthread_mutex_unlock(&sim->sim_mutex));
+	}
+	sim->is_running = 1;
 	pthread_mutex_unlock(&sim->sim_mutex);
 	return (1);
 }

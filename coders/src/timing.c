@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 11:42:54 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 14:03:42 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 11:10:47 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	sleep_thread(t_sim *sim, long long sleep_time)
 	long long	start;
 
 	start = get_timestamp();
-	while (get_timestamp() - start < sleep_time && sim_running(sim))
+	while (sim_running(sim) && get_timestamp() - start < sleep_time)
 		usleep(100);
 }

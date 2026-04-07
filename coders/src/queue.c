@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 14:11:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 15:35:48 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 13:21:01 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,8 @@ int	is_next(t_sim *sim, t_dongle *dongle, int coder_id)
 	q = dongle->queue;
 	if (!dongle->queue[1])
 		return (q[0] == coder_id);
-	if (sim->params->scheduler == EDF)
-	{
-		if (sim->coders[q[0] - 1].last_compile > \
-sim->coders[q[1] - 1].last_compile)
-			return (q[1] == coder_id);
-	}
+	if (sim->params->scheduler == EDF && \
+sim->coders[q[0] - 1].last_compile > sim->coders[q[1] - 1].last_compile)
+		return (q[1] == coder_id);
 	return (q[0] == coder_id);
 }

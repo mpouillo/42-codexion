@@ -6,13 +6,14 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:31:57 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 16:05:57 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:51:17 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
 
-int	done_compiling(t_sim *sim)
+// Returns 1 if all coders are done compiling, else 0.
+static int	done_compiling(t_sim *sim)
 {
 	int			i;
 
@@ -24,17 +25,18 @@ int	done_compiling(t_sim *sim)
 			break ;
 		i++;
 	}
-	if (i == sim->params->coders_nb)
+	if (i != sim->params->coders_nb)
 	{
-		sim->is_running = 0;
 		pthread_mutex_unlock(&sim->sim_mutex);
-		return (1);
+		return (0);
 	}
+	sim->is_running = 0;
 	pthread_mutex_unlock(&sim->sim_mutex);
-	return (0);
+	return (1);
 }
 
-int	burned_out(t_sim *sim)
+// Returns 1 if a corder burned out, else 0.
+static int	burned_out(t_sim *sim)
 {
 	long long	time;
 	int			i;
@@ -57,6 +59,7 @@ int	burned_out(t_sim *sim)
 	return (0);
 }
 
+// Entry point of monitor thread.
 void	*monitor_routine(void *arg)
 {
 	t_sim	*sim;

@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 15:35:29 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 16:39:14 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define COMPILING		1
-# define DEBUGGING		2
-# define REFACTORING	3
 
 typedef enum e_scheduler
 {

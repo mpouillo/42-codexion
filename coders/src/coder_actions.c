@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 11:40:37 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 15:58:49 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/07 16:39:16 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	compile(t_coder *coder)
 	print_action(coder->sim, "compiling", coder->id);
 	sleep_thread(coder->sim, coder->sim->params->compile_t);
 	pthread_mutex_lock(&coder->sim->sim_mutex);
-	coder->last_compile = get_timestamp();
+	if (coder->sim->is_running)
+		coder->compile_count++;
 	pthread_mutex_unlock(&coder->sim->sim_mutex);
-	coder->compile_count++;
 }
 
 static void	debug(t_coder *coder)
@@ -46,6 +46,7 @@ static int	try_compiling(t_coder *coder)
 	return (1);
 }
 
+// Entry point of coders threads.
 void	*coder_routine(void *arg)
 {
 	t_coder	*coder;
@@ -53,6 +54,8 @@ void	*coder_routine(void *arg)
 	coder = (t_coder *) arg;
 	while (!sim_running(coder->sim))
 		usleep(100);
+	if (coder->id % 2)
+		usleep(1500);
 	while (sim_running(coder->sim))
 	{
 		if (coder->compile_count == coder->sim->params->req_compiles_nb)
