@@ -1,0 +1,25 @@
+name: Norminette
+
+on: [push, pull_request]
+
+jobs:
+  norminette:
+    name: Norminette Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
+
+      - name: Install Norminette
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
+
+      - name: Run Norminette
+        run: norminette .
