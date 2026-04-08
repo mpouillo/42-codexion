@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:16:56 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:15:19 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:29:49 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	join_threads(t_sim *sim)
 }
 
 // Sets sim status to 2 and waits for threads to exit.
-static int	destroy_created_threads(t_sim *sim, int n)
+static int	stop_created_threads(t_sim *sim, int n)
 {
 	int	i;
 
@@ -79,7 +79,7 @@ coder_routine, (void *) &sim->coders[i]);
 		i++;
 	}
 	if (i != sim->params->coders_nb)
-		return (destroy_created_threads(sim, i));
+		return (stop_created_threads(sim, i));
 	pthread_mutex_lock(&sim->sim_mutex);
 	sim->is_running = 1;
 	pthread_mutex_unlock(&sim->sim_mutex);

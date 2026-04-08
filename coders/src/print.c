@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 11:49:57 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:37:17 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:17:30 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	print_action(t_sim *sim, char *msg, int coder_id)
 {
 	pthread_mutex_lock(&sim->sim_mutex);
-	if (sim->is_running)
+	if (sim->is_running == 1)
 		printf("%lli %i is %s\n", get_timestamp(), coder_id, msg);
 	pthread_mutex_unlock(&sim->sim_mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 11:40:37 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:24:57 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:38:33 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	compile(t_coder *coder)
 	print_action(coder->sim, "compiling", coder->id);
 	sleep_thread(coder->sim, coder->sim->params->compile_t);
 	pthread_mutex_lock(&coder->sim->sim_mutex);
-	if (coder->sim->is_running)
+	if (coder->sim->is_running == 1)
 		coder->compile_count++;
 	pthread_mutex_unlock(&coder->sim->sim_mutex);
 }
@@ -62,16 +62,12 @@ void	*coder_routine(void *arg)
 	coder = (t_coder *) arg;
 	while (!sim_running(coder->sim))
 		usleep(100);
-	if (coder->sim->is_running == 2)
-		return (NULL);
-	if (coder->id % 2 == 0)
-		usleep((coder->sim->params->compile_t / 2) * 1000);
-	while (sim_running(coder->sim))
+	if (sim_running(coder->sim) == 1 && coder->id % 2 == 0)
+		usleep((coder->sim->params->compile_t / 2 + 1) * 1000);
+	while (sim_running(coder->sim) == 1)
 	{
 		if (!try_compiling(coder))
 			continue ;
-		if (!sim_running(coder->sim))
-			break ;
 		debug(coder);
 		refactor(coder);
 	}

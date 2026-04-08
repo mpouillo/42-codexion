@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:15:19 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:18:34 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:24:08 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ int	stop_sim(t_sim *sim)
 	return (0);
 }
 
-// Returns 1 if sim is running or 0 if it isn't.
+// Returns sim status
+// 0 = not yet running
+// 1 = running
+// 2 = stopped
 int	sim_running(t_sim *sim)
 {
-	int	running;
+	int	status;
 
 	pthread_mutex_lock(&sim->sim_mutex);
-	running = sim->is_running;
+	status = sim->is_running;
 	pthread_mutex_unlock(&sim->sim_mutex);
-	return (running);
+	return (status);
 }
 
 // Frees allocated memory and mutexes.

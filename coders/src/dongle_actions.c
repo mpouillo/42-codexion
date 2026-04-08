@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 12:20:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:25:19 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 13:24:55 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	acquire_dongles(t_coder *coder)
 
 	cd = coder->sim->params->dongle_cd;
 	pthread_mutex_lock(&coder->sim->sim_mutex);
-	if (!coder->sim->is_running || \
+	if (coder->sim->is_running != 1 || \
 is_on_cd(coder->dongle_1, cd) || is_on_cd(coder->dongle_2, cd))
 		return (pthread_mutex_unlock(&coder->sim->sim_mutex));
 	queue_push(coder->dongle_1, coder->id);
