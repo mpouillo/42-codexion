@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 09:56:03 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/07 16:39:22 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:19:32 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	create_coders(t_sim *sim)
 		sim->coders[i].dongle_1 = &sim->dongles[i];
 		sim->coders[i].dongle_2 = &sim->dongles[(i + 1) % \
 sim->params->coders_nb];
-
 		sim->coders[i].last_compile = 0;
 		sim->coders[i].compile_count = 0;
 		sim->coders[i].sim = sim;

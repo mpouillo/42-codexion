@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 13:05:10 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/06 14:18:50 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:38:09 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ t_params	*parse_params(t_params *params, char **argv)
 		params->scheduler = FIFO;
 	if (!validate_args(argv))
 	{
-		printf("Invalid arguments.\n");
+		printf("Invalid arguments. Please try again.\n");
+		print_usage();
 		return (NULL);
 	}
 	return (params);

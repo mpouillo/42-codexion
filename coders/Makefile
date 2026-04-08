@@ -13,18 +13,19 @@ DEP_DIR			:= $(BUILD_DIR)/deps
 CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
-ARGS ?= 10 330 100 100 100 10 20 fifo
+ARGS ?= 10 420 100 100 100 10 20 edf
 
-SRCS :=			coder_actions.c	\
-				coders.c 		\
-				dongles.c		\
-				main.c			\
-				monitor.c		\
-				parsing.c		\
-				print.c			\
-				queue.c			\
-				sim.c			\
-				thread.c		\
+SRCS :=			coder_actions.c		\
+				coders.c 			\
+				dongle_actions.c	\
+				dongles.c			\
+				main.c				\
+				monitor.c			\
+				parsing.c			\
+				print.c				\
+				queue.c				\
+				sim.c				\
+				thread.c			\
 				timing.c
 
 SRCS_PATH		:= $(addprefix $(SRC_DIR)/,$(SRCS))

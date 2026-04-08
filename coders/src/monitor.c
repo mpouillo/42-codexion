@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 12:31:57 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/07 12:51:17 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:09:18 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	*monitor_routine(void *arg)
 	sim = (t_sim *) arg;
 	while (!sim_running(sim))
 		usleep(100);
+	if (sim->is_running == 2)
+		return (NULL);
 	while (1)
 	{
 		if (burned_out(sim))

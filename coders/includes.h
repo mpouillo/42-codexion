@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/07 16:39:14 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 12:36:59 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ void		*coder_routine(void *arg);
 //		coders.c
 int			init_coders(t_sim *sim);
 
+//		dongle_actions.c
+int			acquire_dongles(t_coder *coder);
+void		release_dongles(t_coder *coder);
+
 //		dongles.c
 int			init_dongles(t_sim *sim);
 int			destroy_dongles(t_sim *sim, int n);
-int			acquire_dongles(t_coder *coder);
-void		release_dongles(t_coder *coder);
 
 //		monitor.c
 void		*monitor_routine(void *arg);
@@ -89,6 +91,8 @@ t_params	*parse_params(t_params *params, char **argv);
 
 //		print.c
 void		print_action(t_sim *sim, char *msg, int coder_id);
+int			print_msg(t_sim *sim, char *msg);
+void		print_usage(void);
 
 //		queue.c
 int			is_next(t_sim *sim, t_dongle *dongle, int coder_id);
@@ -99,6 +103,7 @@ void		queue_push(t_dongle *dongle, int coder_id);
 int			run_sim(char **argv);
 int			sim_running(t_sim *sim);
 int			stop_sim(t_sim *sim);
+void		clean_up_sim(t_sim *sim);
 
 //		timing.c
 long long	get_timestamp(void);
