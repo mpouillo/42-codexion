@@ -13,7 +13,7 @@ DEP_DIR			:= $(BUILD_DIR)/deps
 CC				:= cc
 CFLAGS			= -Wall -Werror -Wextra -pthread -I$(INCL_DIR) -g
 
-ARGS ?= 10 420 100 100 100 10 20 edf
+ARGS ?= 10 10000 100 100 100 3 1000 edf
 
 SRCS :=			coder_actions.c		\
 				coders.c 			\
@@ -42,9 +42,6 @@ all: $(NAME)
 
 run: all
 	./codexion $(ARGS)
-
-test: all
-	for i in {1...20}; do ./codexion $(ARGS); done
 
 valgrind: all
 	valgrind ./codexion $(ARGS)
@@ -76,5 +73,5 @@ re: fclean all
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind
 .DEFAULT_GOAL = all
