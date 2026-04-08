@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:15:19 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 13:24:08 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/08 15:03:56 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	run_sim(char **argv)
 
 	if (!parse_params(&params, argv))
 		return (1);
+	if (params.req_compiles_nb == 0)
+		return (0);
 	if (!init_sim(&sim, &params))
 		return (1);
 	if (!start_threads(&sim))
