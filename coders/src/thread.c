@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:16:56 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 13:29:49 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:40:56 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,22 @@
 int	join_threads(t_sim *sim)
 {
 	int	i;
-	int	status;
 	int	error;
 
 	error = 0;
 	i = 0;
 	while (i < sim->params->coders_nb)
 	{
-		status = pthread_join(sim->coders[i].thread, NULL);
-		if (status)
+		if (pthread_join(sim->coders[i].thread, NULL))
 		{
-			print_msg(sim, "Error joining coder thread");
+			stop_sim(sim);
 			error = 1;
 		}
 		i++;
 	}
-	status = pthread_join(sim->monitor, NULL);
-	if (status)
+	if (pthread_join(sim->monitor, NULL))
 	{
-		print_msg(sim, "Error joining monitor thread");
+		stop_sim(sim);
 		error = 1;
 	}
 	return (error == 0);
@@ -64,17 +61,14 @@ static int	stop_created_threads(t_sim *sim, int n)
 int	start_threads(t_sim *sim)
 {
 	int	i;
-	int	status;
 
-	status = pthread_create(&sim->monitor, NULL, monitor_routine, (void *) sim);
-	if (status)
+	if (pthread_create(&sim->monitor, NULL, monitor_routine, (void *) sim))
 		return (0);
 	i = 0;
 	while (i < sim->params->coders_nb)
 	{
-		status = pthread_create(&sim->coders[i].thread, NULL, \
-coder_routine, (void *) &sim->coders[i]);
-		if (status)
+		if (pthread_create(&sim->coders[i].thread, NULL, \
+coder_routine, (void *) &sim->coders[i]))
 			break ;
 		i++;
 	}

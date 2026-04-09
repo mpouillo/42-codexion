@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:15:19 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/09 08:05:06 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:41:16 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ int	sim_running(t_sim *sim)
 	status = sim->is_running;
 	pthread_mutex_unlock(&sim->sim_mutex);
 	return (status);
+}
+
+// Stops sim by setting is_running to 2.
+void	stop_sim(t_sim *sim)
+{
+	pthread_mutex_lock(&sim->sim_mutex);
+	sim->is_running = 2;
+	pthread_mutex_unlock(&sim->sim_mutex);
 }
 
 // Frees allocated memory and mutexes.

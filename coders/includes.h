@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/26 12:40:30 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/09 08:04:47 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/09 13:36:41 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		queue_push(t_dongle *dongle, int coder_id);
 int			run_sim(char **argv);
 int			sim_running(t_sim *sim);
 void		clean_up_sim(t_sim *sim);
+void		stop_sim(t_sim *sim);
 
 //		timing.c
 long long	get_timestamp(void);
