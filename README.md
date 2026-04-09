@@ -25,7 +25,7 @@ $> ./codexion <number_of_coders> <time_to_burnout> <time_to_compile> <time_to_de
 
 Codexion is a project written in C that requires orchestrating multiple threads (represented as coders) competing for limited shared resources (represented as USB dongles). This project is an introduction to POSIX threads (pthreads), mutexes, and smart scheduling aimed at synchronizing resource usage.
 
-POSIX Threads, as defined in the POSIX standards, are subdivisions of a single process that each share the same global memory (data and heap segments) but exist on their own stack. In other words, they compete for resources while executing individually of each other.
+POSIX Threads, as defined in the POSIX standards, are subdivisions of a single process that each share the same global memory (data and heap segments) but exist on their own stack. In other words, they compete for resources while executing independently of each other.
 
 The goal of Codexion is to implement thread-safe management of resources.
 
