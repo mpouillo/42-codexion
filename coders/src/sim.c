@@ -6,20 +6,11 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 11:15:19 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 15:03:56 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/09 08:05:06 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes.h"
-
-// Sets sim->is_running to 0 and returns 0.
-int	stop_sim(t_sim *sim)
-{
-	pthread_mutex_lock(&sim->sim_mutex);
-	sim->is_running = 0;
-	pthread_mutex_unlock(&sim->sim_mutex);
-	return (0);
-}
 
 // Returns sim status
 // 0 = not yet running
@@ -41,7 +32,9 @@ void	clean_up_sim(t_sim *sim)
 	pthread_mutex_lock(&sim->sim_mutex);
 	destroy_dongles(sim, sim->params->coders_nb);
 	free(sim->dongles);
+	sim->dongles = NULL;
 	free(sim->coders);
+	sim->coders = NULL;
 	pthread_mutex_unlock(&sim->sim_mutex);
 	pthread_mutex_destroy(&sim->sim_mutex);
 }
