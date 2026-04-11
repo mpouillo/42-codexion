@@ -6,7 +6,7 @@
 /*   By: mpouillo <mpouillo@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/05 09:56:03 by mpouillo          #+#    #+#             */
-/*   Updated: 2026/04/08 12:19:32 by mpouillo         ###   ########.fr       */
+/*   Updated: 2026/04/11 12:19:41 by mpouillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,15 @@ int	init_coders(t_sim *sim)
 {
 	sim->coders = malloc(sizeof(t_coder) * sim->params->coders_nb);
 	if (!sim->coders)
+	{
+		destroy_dongles(sim, sim->params->coders_nb);
+		free(sim->dongles);
 		return (0);
+	}
 	if (!create_coders(sim))
 	{
+		destroy_dongles(sim, sim->params->coders_nb);
+		free(sim->dongles);
 		free(sim->coders);
 		return (0);
 	}
